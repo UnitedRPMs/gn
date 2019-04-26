@@ -1,14 +1,14 @@
 %global debug_package %{nil}
 
 Name:           gn
-Version:        0.1463 
+Version:        0.1544 
 Release:        1%{?dist}
 Summary:        A meta-build system that generates build files for Ninja
 License:        BSD
 Group:          Development/Tools/Building 
 URL:            https://gn.googlesource.com/
 Source:         https://dev.gentoo.org/~floppym/dist/%{name}-%{version}.tar.gz
-Patch0:         gn-flags.patch
+Patch0:         gn-gen-r3.patch
 BuildRequires:	clang llvm
 
 BuildRequires:  ninja-build
@@ -27,13 +27,14 @@ export CXX=clang++
 export AR=ar
 
 # bootstrap
-python2 build/gen.py --no-sysroot --no-last-commit-position
+python2 build/gen.py --no-last-commit-position
 cat >out/last_commit_position.h <<-EOF
 	#ifndef OUT_LAST_COMMIT_POSITION_H_
 	#define OUT_LAST_COMMIT_POSITION_H_
 	#define LAST_COMMIT_POSITION "${PV}"
 	#endif  // OUT_LAST_COMMIT_POSITION_H_
 EOF
+
 %ninja_build -C out gn
 
 %install
@@ -44,6 +45,9 @@ install -Dm 0755 out/%{name} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+
+* Thu Apr 25 2019 - David Va <davidva AT tuta DOT io> 0.1544-1
+- Updated to 0.1544 
 
 * Thu Jul 26 2018 - David Va <davidva AT tuta DOT io> 0.1463-1
 - Initial build
