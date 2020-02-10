@@ -1,5 +1,5 @@
 #
-# spec file for package ffmpeg
+# spec file for package gn
 #
 # Copyright (c) 2020 UnitedRPMs.
 #
