@@ -22,7 +22,7 @@
 
 Name:           gn
 Version:        0.1616
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A meta-build system that generates build files for Ninja
 License:        BSD
 Group:          Development/Tools/Building 
@@ -34,7 +34,11 @@ Patch1:         gn-always-python3.patch
 BuildRequires:	llvm clang
 
 BuildRequires:  ninja-build
+%if 0%{?fedora} >= 33
+BuildRequires:  python3.9-devel
+%else
 BuildRequires:  python3-devel
+%endif
 
 %description
 GN is a meta-build system that generates build files for Ninja.
@@ -66,6 +70,9 @@ install -Dm 0755 out/%{name} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+
+* Sun May 31 2020 - David Va <davidva AT tuta DOT io> 0.1616-2
+- Rebuilt for python3.9
 
 * Thu Feb 06 2020 - David Va <davidva AT tuta DOT io> 0.1616-1
 - Updated to 0.1616
